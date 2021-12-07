@@ -24,7 +24,7 @@ class ActivityDay (var lineChart: LineChart, val context: Context) {
         val xAxis: XAxis = lineChart.xAxis
         xAxis.axisMaximum = 0f
         xAxis.axisMaximum = 6f
-        xAxis.setLabelCount(20,true)
+        xAxis.setLabelCount(7,true)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.setDrawGridLines(false)
         xAxis.valueFormatter =  IndexAxisValueFormatter(xAxisValues)
