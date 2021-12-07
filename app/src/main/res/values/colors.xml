@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="line_color">#71D875</color>
+    <color name="fill_color">#E3F7E3</color>
+
+    <color name="green">#0CF477</color>
+    <color name="blue">#0C77F4</color>
+    <color name="yellow">#F4EB0C</color>
+    <color name="text">#64686A</color>
+    <color name="line">#E7ECF0</color>
+
+    <color name="ngu_sau">#543A9F</color>
+    <color name="ngu_nong">#721EB4</color>
+    <color name="REM">#4CD864</color>
+    <color name="thuc">#FEC63D</color>
+
+    <color name="target">#00C2C5</color>
+    <color name="step">#4B7E7F</color>
+    
+    <color name="full">#F0F1F2</color>
+    <color name="textProgess">#9F9F9F</color>
+    <color name="line_day">#00C2C5</color>
+
+
+    
+</resources>
