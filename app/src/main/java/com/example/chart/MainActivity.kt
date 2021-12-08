@@ -1,7 +1,7 @@
 package com.example.chart
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -35,11 +35,17 @@ class MainActivity : AppCompatActivity() {
         val value = mutableListOf(
             StressChart.Value(20, 20, "blue"),
             StressChart.Value(21, 15, "yellow"),
-            StressChart.Value(22,12,"green"),
-            StressChart.Value (25,15,"blue"),
-            StressChart.Value(26,15,"blue"),
-            StressChart.Value(27,21,"blue")
+            StressChart.Value(22, 12, "green"),
+            StressChart.Value(25, 15, "blue"),
+            StressChart.Value(26, 15, "blue"),
+            StressChart.Value(27, 21, "blue")
         )
+
+        val percent = 40f
+        val step = 5000
+        step_progess.text = step.toString()
+        "$percent%".also { percent_progess.text = it }
+        progressChart.setProgress(percent, step)
         stressChart.setValue(value)
         oxyChart.setupOxyChart()
         activityWeek.setupActivityChart()

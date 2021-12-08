@@ -17,11 +17,10 @@ class StressChart(context: Context, attributeSet: AttributeSet) : View(context, 
     lateinit var paint: Paint
     var value = mutableListOf<Value>()
     var typeColor = mapOf(
-        "blue" to ContextCompat.getColor(context, R.color.blue) ,
+        "blue" to ContextCompat.getColor(context, R.color.blue),
         "yellow" to ContextCompat.getColor(context, R.color.yellow),
         "green" to ContextCompat.getColor(context, R.color.green)
     )
-
 
 
     @JvmName("setValue1")
@@ -99,7 +98,7 @@ class StressChart(context: Context, attributeSet: AttributeSet) : View(context, 
         paint.strokeWidth = w / 200
 
         canvas!!.drawLine(w / 16 * 2, -w / 20, (w / 16) * 14, -w / 20f, paint)
-        canvas!!.drawLine(w / 16 * 2, -w / 20, w / 16 * 2, -h, paint)
+        canvas.drawLine(w / 16 * 2, -w / 20, w / 16 * 2, -h, paint)
 
         paint.strokeWidth = w / 500
         for (i in 2..14) {
