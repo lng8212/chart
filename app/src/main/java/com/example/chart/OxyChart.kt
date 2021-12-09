@@ -12,22 +12,24 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 
 class OxyChart(var lineChart: LineChart, val context: Context) {
+    private var listValue = mapOf<Int,Float>()
+
     fun setupOxyChart() {
-        val xAxisValues = arrayListOf("00:00", "04:00", "08:00", "12:00", "16:00", "20:00", "23:59")
+        val xAxisValues = arrayListOf("00:00","","04:00","", "08:00", "","12:00","", "16:00","", "20:00","", "23:59")
         val color_line = ContextCompat.getColor(context, R.color.line_color)
         val color_fill = ContextCompat.getColor(context, R.color.fill_color)
 
         val xAxis: XAxis = lineChart.xAxis
         xAxis.axisMaximum = 0f
-        xAxis.axisMaximum = 6f
-        xAxis.setLabelCount(7, true)
+        xAxis.axisMaximum = 12f
+        xAxis.setLabelCount(13, true)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
 
         val leftAxis: YAxis = lineChart.axisLeft
-        leftAxis.axisMaximum = 150f
-        leftAxis.axisMinimum = -50f
-        leftAxis.setLabelCount(4, false)
+        leftAxis.axisMaximum = 120f
+        leftAxis.axisMinimum = -30f
+        leftAxis.setLabelCount(6, false)
 
         lineChart.setDrawGridBackground(false)
         lineChart.description.isEnabled = false
@@ -38,7 +40,7 @@ class OxyChart(var lineChart: LineChart, val context: Context) {
         lineChart.isDoubleTapToZoomEnabled = false
 
 
-        var lineDataSet1 = LineDataSet(dataValueOxy(), "Data Set 1")
+        val lineDataSet1 = LineDataSet(dataValueOxy(), "Data Set 1")
         lineDataSet1.lineWidth = 5f
         lineDataSet1.color = color_line
         lineDataSet1.mode = LineDataSet.Mode.CUBIC_BEZIER
@@ -48,7 +50,7 @@ class OxyChart(var lineChart: LineChart, val context: Context) {
         lineDataSet1.setDrawCircles(false)
 
 
-        var dataSets = ArrayList<ILineDataSet>()
+        val dataSets = ArrayList<ILineDataSet>()
         dataSets.add(lineDataSet1)
 
         val data = LineData(dataSets)
@@ -58,21 +60,14 @@ class OxyChart(var lineChart: LineChart, val context: Context) {
 
     }
 
+    fun setValue(listValue: Map<Int,Float>){
+        this.listValue = listValue
+    }
 
     private fun dataValueOxy(): ArrayList<Entry> {
-        var dataVals = ArrayList<Entry>()
-        dataVals.add(Entry(0f, 45f))
-        dataVals.add(Entry(0.7f, 65f))
-        dataVals.add(Entry(1f, 55f))
-        dataVals.add(Entry(2f, 0f))
-        dataVals.add(Entry(3f, 51f))
-        dataVals.add(Entry(3.4f, 70f))
-        dataVals.add(Entry(4f, 50f))
-        dataVals.add(Entry(4.6f, 30f))
-        dataVals.add(Entry(5f, 45f))
-        dataVals.add(Entry(5.4f, 51f))
-        dataVals.add(Entry(6f, 47f))
-
+        val dataVals = ArrayList<Entry>()
+        for (i in listValue)
+        dataVals.add(Entry(i.key.toFloat()/2, i.value ))
         return dataVals
     }
 }

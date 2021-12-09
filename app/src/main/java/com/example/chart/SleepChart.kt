@@ -17,13 +17,12 @@ class SleepChart(context: Context, attributeSet: AttributeSet) : View(context, a
     lateinit var paint: Paint
     var h = 0f
     var w = 0f
-    val timeSleep = 8 * 60
-    val ngusau = listOf(0 to 30, 50 to 70)
-    val ngunong = listOf(30 to 35, 70 to 200, 202 to 300, 330 to 480)
-    val remm = listOf(35 to 40, 200 to 202, 300 to 330)
-    val thucc = listOf(40 to 50)
+    lateinit var value: Data
 
-
+    data class Data(val timeSleep: Int,val ngusau:Map<Int,Int>, val ngunong:Map<Int,Int>, val rem: Map<Int,Int>, val thuc:Map<Int,Int>)
+    fun getValue (value :Data){
+        this.value = value
+    }
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         this.h = h.toFloat()
@@ -44,11 +43,12 @@ class SleepChart(context: Context, attributeSet: AttributeSet) : View(context, a
 
     private fun drawThuc(canvas: Canvas) {
         paint.color = thuc
+        val thucc = value.thuc
         for (item in thucc) {
             canvas.drawRect(
-                w / timeSleep * item.first,
+                w / value.timeSleep * item.key,
                 -h,
-                w / timeSleep * item.second,
+                w / value.timeSleep * item.value,
                 0f,
                 paint
             )
@@ -57,11 +57,12 @@ class SleepChart(context: Context, attributeSet: AttributeSet) : View(context, a
 
     private fun drawRem(canvas: Canvas) {
         paint.color = rem
+        val remm = value.rem
         for (item in remm) {
             canvas.drawRect(
-                w / timeSleep * item.first,
+                w / value.timeSleep* item.key,
                 -h,
-                w / timeSleep * item.second,
+                w / value.timeSleep * item.value,
                 0f,
                 paint
             )
@@ -71,11 +72,12 @@ class SleepChart(context: Context, attributeSet: AttributeSet) : View(context, a
 
     private fun drawNgunong(canvas: Canvas) {
         paint.color = ngu_nong
+        val ngunong = value.ngunong
         for (item in ngunong) {
             canvas.drawRect(
-                w / timeSleep * item.first,
+                w / value.timeSleep * item.key,
                 -h,
-                w / timeSleep * item.second,
+                w / value.timeSleep * item.value,
                 0f,
                 paint
             )
@@ -84,11 +86,12 @@ class SleepChart(context: Context, attributeSet: AttributeSet) : View(context, a
 
     private fun drawNgusau(canvas: Canvas?) {
         paint.color = ngu_sau
+        val ngusau = value.ngusau
         for (item in ngusau) {
             canvas!!.drawRect(
-                w / timeSleep * item.first,
+                w / value.timeSleep * item.key,
                 -h,
-                w / timeSleep * item.second,
+                w / value.timeSleep * item.value,
                 0f,
                 paint
             )

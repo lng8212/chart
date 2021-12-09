@@ -10,22 +10,25 @@ import androidx.core.content.ContextCompat
 class StressChart(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 
 
-    val color_text = ContextCompat.getColor(context, R.color.text)
-    val color_line = ContextCompat.getColor(context, R.color.line)
-    var h = 0f
-    var w = 0f
-    lateinit var paint: Paint
-    var value = mutableListOf<Value>()
-    var typeColor = mapOf(
+    private val color_text = ContextCompat.getColor(context, R.color.text)
+    private val color_line = ContextCompat.getColor(context, R.color.line)
+    private var h = 0f
+    private var w = 0f
+    private lateinit var paint: Paint
+    private var value = mutableListOf<Value>()
+    private var xAxisValue = mutableListOf<String>()
+    private var yAxisValue = mutableListOf<String>()
+    private var typeColor = mapOf(
         "blue" to ContextCompat.getColor(context, R.color.blue),
         "yellow" to ContextCompat.getColor(context, R.color.yellow),
         "green" to ContextCompat.getColor(context, R.color.green)
     )
 
-
     @JvmName("setValue1")
-    fun setValue(value: MutableList<Value>) {
+    fun setValue(value: MutableList<Value>,xAxisValue: MutableList<String>,yAxisValue: MutableList<String>) {
         this.value = value
+        this.xAxisValue = xAxisValue
+        this.yAxisValue = yAxisValue
         postInvalidate()
     }
 
@@ -65,29 +68,26 @@ class StressChart(context: Context, attributeSet: AttributeSet) : View(context, 
 
     private fun drawText(canvas: Canvas?) {
         val h1 = h - w / 20
-        val xValue = listOf(
-            "00:00" to w / 16 * 2,
-            "04:00" to w / 16 * 4,
-            "08:00" to w / 16 * 6,
-            "12:00" to w / 16 * 8,
-            "16:00" to w / 16 * 10,
-            "20:00" to w / 16 * 12,
-            "23:59" to w / 16 * 14
-        )
-        val yValue = listOf(
-            "0" to (-h1) / 4 - w / 20,
-            "20" to -(h1 / 4) * 2 - w / 20,
-            "40" to -(h1 / 4) * 3 - w / 20
-        )
-
+        val final = w / 16 * 14
+        val begin = w / 16 * 2
         paint.textSize = w / 30
         paint.color = color_text
+        val positionxAxisValue = mutableMapOf<String,Float>()
+        val positionYAxisValue = mutableMapOf<String,Float>()
 
-        for (item in xValue) {
-            canvas!!.drawText(item.first, item.second - w / 25, 0f, paint)
+        val xSize = xAxisValue.size
+        val ySize = yAxisValue.size
+        for (i in 0 until xSize){
+            positionxAxisValue[xAxisValue[i]] = ((final-begin)*(i+1))/ (xSize-1)
         }
-        for (item in yValue) {
-            canvas!!.drawText(item.first, w / 16 * 2 - w / 17, item.second, paint)
+        for (i in 0 until ySize){
+            positionYAxisValue[yAxisValue[i]] = (i+1) * (-h1)/(ySize+1) - w/20
+        }
+        for (item in positionxAxisValue) {
+            canvas!!.drawText(item.key, item.value - w / 25, 0f, paint)
+        }
+        for (item in positionYAxisValue) {
+            canvas!!.drawText(item.key, w / 16 * 2 - w / 17, item.value, paint)
         }
 
     }
@@ -117,5 +117,4 @@ class StressChart(context: Context, attributeSet: AttributeSet) : View(context, 
     }
 
     data class Value(val x: Int, val y: Int, val color: String, val time: String? = null)
-
 }

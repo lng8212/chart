@@ -12,8 +12,15 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 
 class ActivityWeek(var barChart: BarChart, val context: Context) {
 
+    private lateinit var xAxisValues: List<String>
+    private lateinit var yAxisValues: List<Pair<Any, Float>>
+    fun setValue(xAxisValues: List<String>, yAxisValues: List<Pair<Any, Float>>) {
+        this.xAxisValues = xAxisValues
+        this.yAxisValues = yAxisValues
+    }
+
     fun setupActivityChart() {
-        val xAxisValues = arrayListOf("28/10", "29/10", "30/10", "31/10", "01/11", "02/11", "03/11")
+
         val target = ContextCompat.getColor(context, R.color.target)
         val step = ContextCompat.getColor(context, R.color.step)
         val color = listOf(step, target)
@@ -51,16 +58,15 @@ class ActivityWeek(var barChart: BarChart, val context: Context) {
     }
 
     private fun dataValue(): ArrayList<BarEntry> {
-        var dataVals = ArrayList<BarEntry>()
-
-        dataVals.add(BarEntry(0f, floatArrayOf(500f, 4000f)))
-        dataVals.add(BarEntry(1f, floatArrayOf(600f, 1500f)))
-        dataVals.add(BarEntry(2f, floatArrayOf(1200f, 5000f)))
-        dataVals.add(BarEntry(3f, floatArrayOf(1500f, 4800f)))
-        dataVals.add(BarEntry(4f, floatArrayOf(1200f, 1600f)))
-        dataVals.add(BarEntry(5f, floatArrayOf(3000f, 5500f)))
-        dataVals.add(BarEntry(6f, floatArrayOf(3000f, 4000f)))
-
+        val dataVals = ArrayList<BarEntry>()
+        for (i in yAxisValues.indices) {
+            dataVals.add(
+                BarEntry(
+                    i.toFloat(),
+                    floatArrayOf(yAxisValues[i].first as Float, yAxisValues[i].second)
+                )
+            )
+        }
 
         return dataVals
     }
