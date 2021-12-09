@@ -218,6 +218,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/stressLayout">
 
+                <ImageView
+                    android:id="@+id/line1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:scaleX="0.9"
+                    app:layout_constraintEnd_toStartOf="@+id/sleep_icon"
+                    app:layout_constraintStart_toEndOf="@+id/txt_start"
+                    app:layout_constraintTop_toBottomOf="@+id/sleepChart"
+                    app:srcCompat="@drawable/line" />
+
+                <ImageView
+                    android:id="@+id/line2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:scaleX="0.9"
+                    app:layout_constraintEnd_toStartOf="@+id/txt_end"
+                    app:layout_constraintStart_toEndOf="@+id/sleep_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/sleepChart"
+                    app:srcCompat="@drawable/line" />
+
                 <TextView
                     android:id="@+id/txt_sleep"
                     android:layout_width="wrap_content"
@@ -245,6 +267,153 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_sleep" />
+
+                <TextView
+                    android:id="@+id/txt_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="21:02"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sleepChart" />
+
+                <TextView
+                    android:id="@+id/txt_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="6:25"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.955"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sleepChart" />
+
+                <ImageView
+                    android:id="@+id/sleep_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:scaleX="2"
+                    android:scaleY="2"
+                    app:layout_constraintEnd_toStartOf="@+id/txt_end"
+                    app:layout_constraintStart_toEndOf="@+id/txt_start"
+                    app:layout_constraintTop_toBottomOf="@+id/sleepChart"
+                    app:srcCompat="@drawable/sleep_icon" />
+
+                <TableLayout
+                    android:id="@+id/table_info_sleep"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_column="4"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:stretchColumns="1,3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sleep_icon">
+
+                    <TableRow android:minHeight="80px">
+
+                        <TextView
+                            android:id="@+id/txt_totalngusau"
+                            android:layout_span="2"
+                            android:text="20 giờ 02 phút"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/txt_totalrem"
+                            android:layout_width="wrap_content"
+                            android:layout_column="2"
+                            android:layout_span="2"
+                            android:text="20 giờ 02 phút"
+                            android:textSize="16dp" />
+                    </TableRow>
+
+                    <TableRow android:minHeight="80px">
+
+                        <ImageView
+                            android:paddingLeft="4dp"
+                            android:paddingTop="4dp"
+                            android:scaleX="2"
+                            android:scaleY="2"
+                            android:src="@drawable/ngusau_icon" />
+
+                        <TextView
+                            android:paddingLeft="16dp"
+                            android:text="Ngủ sâu"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:paddingLeft="4dp"
+                            android:paddingTop="4dp"
+                            android:scaleX="2"
+                            android:scaleY="2"
+                            android:src="@drawable/rem_icon" />
+
+                        <TextView
+                            android:paddingLeft="16dp"
+                            android:text="REM"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+                    </TableRow>
+
+                    <TableRow android:minHeight="80px">
+
+                        <TextView
+                            android:id="@+id/txt_totalngunong"
+                            android:layout_span="2"
+                            android:text="20 giờ 02 phút"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/txt_totalthuc"
+                            android:layout_span="2"
+                            android:text="20 giờ 02 phút"
+                            android:textSize="16dp" />
+                    </TableRow>
+
+                    <TableRow android:minHeight="80px">
+
+                        <ImageView
+                            android:paddingLeft="4dp"
+                            android:paddingTop="4dp"
+                            android:scaleX="2"
+                            android:scaleY="2"
+                            android:src="@drawable/ngunong_icon" />
+
+                        <TextView
+                            android:paddingLeft="16dp"
+                            android:text="Ngủ nông"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:paddingLeft="4dp"
+                            android:paddingTop="4dp"
+                            android:scaleX="2"
+                            android:scaleY="2"
+                            android:src="@drawable/thuc_icon" />
+
+                        <TextView
+                            android:paddingLeft="16dp"
+                            android:text="Thức"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+                    </TableRow>
+
+                </TableLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
