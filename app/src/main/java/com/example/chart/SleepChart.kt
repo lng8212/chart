@@ -19,7 +19,7 @@ class SleepChart(context: Context, attributeSet: AttributeSet) : View(context, a
     var w = 0f
     lateinit var value: Data
 
-    data class Data(val timeSleep: Int,val ngusau:Map<Int,Int>, val ngunong:Map<Int,Int>, val rem: Map<Int,Int>, val thuc:Map<Int,Int>)
+    data class Data(val timeSleep: Int,val ngusau:List<Time>, val ngunong:List<Time>, val rem: List<Time>, val thuc:List<Time>)
     fun getValue (value :Data){
         this.value = value
     }
@@ -46,9 +46,9 @@ class SleepChart(context: Context, attributeSet: AttributeSet) : View(context, a
         val thucc = value.thuc
         for (item in thucc) {
             canvas.drawRect(
-                w / value.timeSleep * item.key,
+                w / value.timeSleep * item.start,
                 -h,
-                w / value.timeSleep * item.value,
+                w / value.timeSleep * item.end,
                 0f,
                 paint
             )
@@ -60,9 +60,9 @@ class SleepChart(context: Context, attributeSet: AttributeSet) : View(context, a
         val remm = value.rem
         for (item in remm) {
             canvas.drawRect(
-                w / value.timeSleep* item.key,
+                w / value.timeSleep* item.start,
                 -h,
-                w / value.timeSleep * item.value,
+                w / value.timeSleep * item.end,
                 0f,
                 paint
             )
@@ -75,9 +75,9 @@ class SleepChart(context: Context, attributeSet: AttributeSet) : View(context, a
         val ngunong = value.ngunong
         for (item in ngunong) {
             canvas.drawRect(
-                w / value.timeSleep * item.key,
+                w / value.timeSleep * item.start,
                 -h,
-                w / value.timeSleep * item.value,
+                w / value.timeSleep * item.end,
                 0f,
                 paint
             )
@@ -89,13 +89,15 @@ class SleepChart(context: Context, attributeSet: AttributeSet) : View(context, a
         val ngusau = value.ngusau
         for (item in ngusau) {
             canvas!!.drawRect(
-                w / value.timeSleep * item.key,
+                w / value.timeSleep * item.start,
                 -h,
-                w / value.timeSleep * item.value,
+                w / value.timeSleep * item.end,
                 0f,
                 paint
             )
         }
     }
+
+    data class Time (val start: Int, val end: Int)
 
 }

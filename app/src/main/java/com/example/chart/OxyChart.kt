@@ -12,7 +12,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 
 class OxyChart(var lineChart: LineChart, val context: Context) {
-    private var listValue = mapOf<Int,Float>()
+    private var listValue = listOf<Data>()
 
     fun setupOxyChart() {
         val xAxisValues = arrayListOf("00:00","","04:00","", "08:00", "","12:00","", "16:00","", "20:00","", "23:59")
@@ -60,14 +60,15 @@ class OxyChart(var lineChart: LineChart, val context: Context) {
 
     }
 
-    fun setValue(listValue: Map<Int,Float>){
+    fun setValue(listValue: List<Data>){
         this.listValue = listValue
     }
 
     private fun dataValueOxy(): ArrayList<Entry> {
         val dataVals = ArrayList<Entry>()
         for (i in listValue)
-        dataVals.add(Entry(i.key.toFloat()/2, i.value ))
+        dataVals.add(Entry(i.time.toFloat()/2, i.value ))
         return dataVals
     }
+    data class Data (val time: Int, val value: Float)
 }

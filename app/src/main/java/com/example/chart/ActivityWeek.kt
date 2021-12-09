@@ -1,6 +1,8 @@
 package com.example.chart
 
 import android.content.Context
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
@@ -13,8 +15,8 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 class ActivityWeek(var barChart: BarChart, val context: Context) {
 
     private lateinit var xAxisValues: List<String>
-    private lateinit var yAxisValues: List<Pair<Any, Float>>
-    fun setValue(xAxisValues: List<String>, yAxisValues: List<Pair<Any, Float>>) {
+    private lateinit var yAxisValues: List<Data>
+    fun setValue(xAxisValues: List<String>, yAxisValues: List<Data>) {
         this.xAxisValues = xAxisValues
         this.yAxisValues = yAxisValues
     }
@@ -63,11 +65,13 @@ class ActivityWeek(var barChart: BarChart, val context: Context) {
             dataVals.add(
                 BarEntry(
                     i.toFloat(),
-                    floatArrayOf(yAxisValues[i].first as Float, yAxisValues[i].second)
+                    floatArrayOf(yAxisValues[i].complete, yAxisValues[i].target)
                 )
             )
         }
 
         return dataVals
     }
+
+    data class Data (val complete: Float, val target: Float)
 }
