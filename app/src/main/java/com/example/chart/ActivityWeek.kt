@@ -65,7 +65,7 @@ class ActivityWeek(var barChart: BarChart, val context: Context) {
             dataVals.add(
                 BarEntry(
                     i.toFloat(),
-                    floatArrayOf(yAxisValues[i].complete, yAxisValues[i].target)
+                    floatArrayOf(yAxisValues[i].complete, yAxisValues[i].target-yAxisValues[i].complete)
                 )
             )
         }
