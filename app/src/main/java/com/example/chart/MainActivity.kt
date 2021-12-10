@@ -64,12 +64,24 @@ class MainActivity : AppCompatActivity() {
             OxyChart.Data(3, 55f),
             OxyChart.Data(4, 70f),
             OxyChart.Data(5, 90f),
-            OxyChart.Data(7, 75f),
-            OxyChart.Data(8, 90f),
+            OxyChart.Data(6,50f),
+            OxyChart.Data(7,50f),
+            OxyChart.Data(8, 75f),
+            OxyChart.Data(9, 90f),
             OxyChart.Data(10, 100f),
             OxyChart.Data(11, 20f),
+            OxyChart.Data(12, 20f),
+            OxyChart.Data(13, 20f),
+            OxyChart.Data(14, 20f),
+            OxyChart.Data(15, 20f),
+            OxyChart.Data(16, 20f),
+            OxyChart.Data(17, 20f),
+            OxyChart.Data(18, 20f),
             OxyChart.Data(19, 50f),
-            OxyChart.Data(23, 70f)
+            OxyChart.Data(20, 20f),
+            OxyChart.Data(21, 50f),
+            OxyChart.Data(22, 50f),
+            OxyChart.Data(23, 50f),
         )
         oxyChart.setValue(listValue)
         oxyChart.setupOxyChart()

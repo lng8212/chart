@@ -93,7 +93,6 @@
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.498"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/image_progress"
                         app:layout_constraintVertical_bias="0.041" />
@@ -108,7 +107,6 @@
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.496"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/step_progess"
                         app:layout_constraintVertical_bias="0.0" />
@@ -223,7 +221,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:scaleX="0.9"
                     app:layout_constraintEnd_toStartOf="@+id/sleep_icon"
                     app:layout_constraintStart_toEndOf="@+id/txt_start"
                     app:layout_constraintTop_toBottomOf="@+id/sleepChart"
@@ -234,7 +231,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:scaleX="0.9"
                     app:layout_constraintEnd_toStartOf="@+id/txt_end"
                     app:layout_constraintStart_toEndOf="@+id/sleep_icon"
                     app:layout_constraintTop_toBottomOf="@+id/sleepChart"
@@ -299,8 +295,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:scaleX="2"
-                    android:scaleY="2"
                     app:layout_constraintEnd_toStartOf="@+id/txt_end"
                     app:layout_constraintStart_toEndOf="@+id/txt_start"
                     app:layout_constraintTop_toBottomOf="@+id/sleepChart"
@@ -314,7 +308,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="16dp"
-                    android:stretchColumns="1,3"
+                    android:stretchColumns="1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/sleep_icon">
@@ -329,8 +323,6 @@
 
                         <TextView
                             android:id="@+id/txt_totalrem"
-                            android:layout_width="wrap_content"
-                            android:layout_column="2"
                             android:layout_span="2"
                             android:text="20 giờ 02 phút"
                             android:textSize="16dp" />
@@ -341,8 +333,6 @@
                         <ImageView
                             android:paddingLeft="4dp"
                             android:paddingTop="4dp"
-                            android:scaleX="2"
-                            android:scaleY="2"
                             android:src="@drawable/ngusau_icon" />
 
                         <TextView
@@ -355,8 +345,6 @@
                         <ImageView
                             android:paddingLeft="4dp"
                             android:paddingTop="4dp"
-                            android:scaleX="2"
-                            android:scaleY="2"
                             android:src="@drawable/rem_icon" />
 
                         <TextView
@@ -387,8 +375,6 @@
                         <ImageView
                             android:paddingLeft="4dp"
                             android:paddingTop="4dp"
-                            android:scaleX="2"
-                            android:scaleY="2"
                             android:src="@drawable/ngunong_icon" />
 
                         <TextView
@@ -401,8 +387,6 @@
                         <ImageView
                             android:paddingLeft="4dp"
                             android:paddingTop="4dp"
-                            android:scaleX="2"
-                            android:scaleY="2"
                             android:src="@drawable/thuc_icon" />
 
                         <TextView
