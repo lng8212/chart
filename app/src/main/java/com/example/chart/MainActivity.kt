@@ -42,17 +42,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpSleepChart() {
         val timeSleep = 8 * 60
-        val ngusau = listOf(SleepChart.Time(0, 30), SleepChart.Time(50, 70))
-        val ngunong = listOf(
-            SleepChart.Time(30, 35),
-            SleepChart.Time(70, 200),
-            SleepChart.Time(202, 300),
-            SleepChart.Time(330, 480)
+        val total = listOf(
+            SleepChart.Time(0, 30, "Ngu sau"),
+            SleepChart.Time(30, 35,"Ngu nong"),
+            SleepChart.Time(35, 40, "REM"),
+            SleepChart.Time(40, 50,"Thuc"),
+            SleepChart.Time(50, 70,"Ngu sau"),
+            SleepChart.Time(70, 200,"Ngu nong"),
+            SleepChart.Time(200, 202, "Ngu sau"),
+            SleepChart.Time(202, 300,"Ngu nong"),
+            SleepChart.Time(300, 330, "REM"),
+            SleepChart.Time(330, 480,"Ngu nong")
         )
-        val remm =
-            listOf(SleepChart.Time(35, 40), SleepChart.Time(200, 202), SleepChart.Time(300, 330))
-        val thucc = listOf(SleepChart.Time(40, 50))
-        sleepChart.getValue(SleepChart.Data(timeSleep, ngusau, ngunong, remm, thucc))
+        sleepChart.getValue(SleepChart.Data(timeSleep,total))
     }
 
     private fun setUpOxyChart() {

@@ -19,7 +19,7 @@ class SleepChart(context: Context, attributeSet: AttributeSet) : View(context, a
     var w = 0f
     lateinit var value: Data
 
-    data class Data(val timeSleep: Int,val ngusau:List<Time>, val ngunong:List<Time>, val rem: List<Time>, val thuc:List<Time>)
+    data class Data(val timeSleep: Int,val total:List<Time>)
     fun getValue (value :Data){
         this.value = value
     }
@@ -43,61 +43,67 @@ class SleepChart(context: Context, attributeSet: AttributeSet) : View(context, a
 
     private fun drawThuc(canvas: Canvas) {
         paint.color = thuc
-        val thucc = value.thuc
-        for (item in thucc) {
-            canvas.drawRect(
-                w / value.timeSleep * item.start,
-                -h,
-                w / value.timeSleep * item.end,
-                0f,
-                paint
-            )
+        for (item in value.total) {
+            if(item.type == "Thuc"){
+                canvas.drawRect(
+                    w / value.timeSleep * item.start,
+                    -h,
+                    w / value.timeSleep * item.end,
+                    0f,
+                    paint
+                )
+            }
+
         }
     }
 
     private fun drawRem(canvas: Canvas) {
         paint.color = rem
-        val remm = value.rem
-        for (item in remm) {
-            canvas.drawRect(
-                w / value.timeSleep* item.start,
-                -h,
-                w / value.timeSleep * item.end,
-                0f,
-                paint
-            )
+        for (item in value.total) {
+            if(item.type == "REM"){
+                canvas.drawRect(
+                    w / value.timeSleep* item.start,
+                    -h,
+                    w / value.timeSleep * item.end,
+                    0f,
+                    paint
+                )
+            }
+
         }
 
     }
 
     private fun drawNgunong(canvas: Canvas) {
         paint.color = ngu_nong
-        val ngunong = value.ngunong
-        for (item in ngunong) {
-            canvas.drawRect(
-                w / value.timeSleep * item.start,
-                -h,
-                w / value.timeSleep * item.end,
-                0f,
-                paint
-            )
+        for (item in value.total) {
+            if(item.type == "Ngu nong"){
+                canvas.drawRect(
+                    w / value.timeSleep * item.start,
+                    -h,
+                    w / value.timeSleep * item.end,
+                    0f,
+                    paint
+                )
+            }
+
         }
     }
 
     private fun drawNgusau(canvas: Canvas?) {
         paint.color = ngu_sau
-        val ngusau = value.ngusau
-        for (item in ngusau) {
-            canvas!!.drawRect(
-                w / value.timeSleep * item.start,
-                -h,
-                w / value.timeSleep * item.end,
-                0f,
-                paint
-            )
+        for (item in value.total) {
+            if(item.type == "Ngu sau"){
+                canvas!!.drawRect(
+                    w / value.timeSleep * item.start,
+                    -h,
+                    w / value.timeSleep * item.end,
+                    0f,
+                    paint
+                )
+            }
         }
     }
 
-    data class Time (val start: Int, val end: Int)
-
+    data class Time (val start: Int, val end: Int, val type: String)
 }
