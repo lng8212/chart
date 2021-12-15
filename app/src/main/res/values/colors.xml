@@ -23,7 +23,8 @@
 
     <color name="target">#00C2C5</color>
     <color name="step">#4B7E7F</color>
-    
+
+    <color name="grid_backgroud">#D3DFE8</color>
     <color name="full">#F0F1F2</color>
     <color name="textProgess">#9F9F9F</color>
     <color name="line_day">#00C2C5</color>

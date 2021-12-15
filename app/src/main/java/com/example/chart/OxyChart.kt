@@ -18,6 +18,7 @@ class OxyChart(var lineChart: LineChart, context: Context) {
     private var listValue = listOf<Data>()
     private val color_line = ContextCompat.getColor(context, R.color.line_color)
     private val color_fill = ContextCompat.getColor(context, R.color.fill_color)
+    private val line = ContextCompat.getColor(context, R.color.grid_backgroud)
     fun setupOxyChart() {
         val xAxisValues = arrayListOf(
             "00:00",
@@ -42,11 +43,12 @@ class OxyChart(var lineChart: LineChart, context: Context) {
         xAxis.setLabelCount(13, true)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
-
+        xAxis.gridColor = line
         val leftAxis: YAxis = lineChart.axisLeft
-        leftAxis.axisMaximum = 120f
+        leftAxis.axisMaximum = 150f
         leftAxis.axisMinimum = 0f
-        leftAxis.setLabelCount(6, false)
+        leftAxis.setLabelCount(4, false)
+        leftAxis.gridColor= Color.RED
 
         lineChart.setDrawGridBackground(false)
         lineChart.description.isEnabled = false
@@ -55,7 +57,6 @@ class OxyChart(var lineChart: LineChart, context: Context) {
         lineChart.setTouchEnabled(false)
         lineChart.setPinchZoom(false)
         lineChart.isDoubleTapToZoomEnabled = false
-
 
         val dataValueOxy = dataValueOxy()
         val lineDataSet1 = LineDataSet(dataValueOxy, "Data Set 1")

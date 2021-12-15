@@ -1,98 +1,125 @@
 package com.example.chart
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.DashPathEffect
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.util.AttributeSet
+import android.util.Log
+import android.view.View
 import androidx.core.content.ContextCompat
-import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.LegendEntry
+import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import kotlin.math.log
 
-class ActivityDay(var lineChart: LineChart, val context: Context) {
+class ActivityDay(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 
-    fun setupActivityDay() {
-        val xAxisValues = arrayListOf("00", "04", "08", "12", "16", "20", "00")
-        val color_line = ContextCompat.getColor(context, R.color.line_day)
 
-        val xAxis: XAxis = lineChart.xAxis
-        xAxis.axisMaximum = 0f
-        xAxis.axisMaximum = 6f
-        xAxis.setLabelCount(7, true)
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.setDrawGridLines(false)
-        xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
+    private val color_text = ContextCompat.getColor(context, R.color.text)
+    private val color_line = ContextCompat.getColor(context, R.color.line)
+    private var h = 0f
+    private var w = 0f
+    private lateinit var paint: Paint
+    private var value = mutableListOf<Value>()
+    private var xAxisValue = mutableListOf<String>()
+    private var yAxisValue = mutableListOf<String>()
+    private val step = ContextCompat.getColor(context, R.color.target)
 
-        val leftAxis: YAxis = lineChart.axisLeft
-        leftAxis.axisMaximum = 4000f
-        leftAxis.axisMinimum = 0f
-        leftAxis.setDrawGridLines(true)
-        leftAxis.setLabelCount(5, true)
-
-        lineChart.setDrawGridBackground(false)
-        lineChart.description.isEnabled = false
-//        lineChart.legend.isEnabled = false
-        lineChart.legend.form = Legend.LegendForm.LINE
-        lineChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-
-        var legendEntrys = mutableListOf<LegendEntry>()
-        val legendEntry = LegendEntry()
-        legendEntry.formColor = Color.BLACK
-        legendEntry.form = Legend.LegendForm.LINE
-        legendEntry.label = "Goal"
-        legendEntry.formLineWidth = 1f
-        legendEntry.formSize = 40f
-        legendEntry.formLineDashEffect = DashPathEffect(floatArrayOf(8f, 8f), 0f)
-        legendEntrys.add(legendEntry)
-        lineChart.legend.setCustom(legendEntrys)
-
-        lineChart.axisRight.isEnabled = false
-        lineChart.setTouchEnabled(false)
-        lineChart.setPinchZoom(false)
-        lineChart.isDoubleTapToZoomEnabled = false
-
-        var lineDataSet1 = LineDataSet(dataValue(), null)
-        lineDataSet1.lineWidth = 1f
-        lineDataSet1.color = color_line
-        lineDataSet1.setDrawCircles(false)
-
-        var lineDataSet2 = LineDataSet(goal(), "Goal")
-        lineDataSet2.enableDashedLine(10f, 2f, 0f)
-        lineDataSet2.color = Color.BLACK
-        lineDataSet2.setDrawCircles(false)
-
-        var dataSets = ArrayList<ILineDataSet>()
-        dataSets.add(lineDataSet1)
-        dataSets.add(lineDataSet2)
-
-        val data = LineData(dataSets)
-        data.setDrawValues(false)
-        lineChart.data = data
-        lineChart.invalidate()
+    @JvmName("setValue1")
+    fun setValue(value: MutableList<Value>,xAxisValue: MutableList<String>,yAxisValue: MutableList<String>) {
+        this.value = value
+        this.xAxisValue = xAxisValue
+        this.yAxisValue = yAxisValue
+        postInvalidate()
     }
 
-    private fun dataValue(): ArrayList<Entry> {
-        var dataVals = ArrayList<Entry>()
-        dataVals.add(Entry(0f, 0f))
-        dataVals.add(Entry(1f, 0f))
-        dataVals.add(Entry(1.5f, 0f))
-        dataVals.add(Entry(2f, 500f))
-        dataVals.add(Entry(2.6f, 500f))
-        dataVals.add(Entry(3f, 1200f))
-        dataVals.add(Entry(3.5f, 1200f))
-        return dataVals
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        this.h = h.toFloat()
+        this.w = w.toFloat()
     }
 
-    private fun goal(): ArrayList<Entry> {
-        var dataVals = ArrayList<Entry>()
-        dataVals.add(Entry(0f, 3500f))
-        dataVals.add(Entry(6f, 3500f))
-        return dataVals
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+        paint = Paint(Paint.ANTI_ALIAS_FLAG)
+        canvas!!.translate(0f, h)
+        drawAxis(canvas)
+        drawText(canvas)
+        drawValue(canvas)
     }
+
+    private fun drawValue(canvas: Canvas) {
+        paint.strokeWidth = w / 220
+        val final = w / 16 * 14
+        val begin = w / 16 * 2
+        for (item in value) {
+            paint.color = step
+            canvas.drawLine(
+                (final - begin) / 144 * item.x + begin,
+                -w / 20f,
+                (final - begin) / 144 * item.x + begin,
+                ((-h + w / 20) / 150) * item.y - w / 20,
+                paint
+            )
+        }
+
+    }
+
+
+    private fun drawText(canvas: Canvas?) {
+        val h1 = h - w / 20
+        val final = w / 16 * 14
+        val begin = w / 16 * 2
+        paint.textSize = w / 30
+        paint.color = color_text
+        val positionxAxisValue = mutableMapOf<String,Float>()
+        val positionYAxisValue = mutableMapOf<String,Float>()
+
+        val xSize = xAxisValue.size
+        val ySize = yAxisValue.size
+        for (i in 0 until xSize){
+            positionxAxisValue[xAxisValue[i]] = ((final-begin)*(i+1))/ (xSize-1)
+        }
+        for (i in 0 until ySize){
+            positionYAxisValue[yAxisValue[i]] = (i+1) * (-h1)/(ySize+1) - w/20
+        }
+        for (item in positionxAxisValue) {
+            canvas!!.drawText(item.key, item.value - w / 25, 0f, paint)
+        }
+        for (item in positionYAxisValue) {
+            canvas!!.drawText(item.key, w / 16 * 2 - w / 17, item.value, paint)
+        }
+
+    }
+
+    private fun drawAxis(canvas: Canvas?) {
+        val h1 = h - w / 20
+        paint.color = color_line
+        paint.strokeWidth = w / 200
+
+        canvas!!.drawLine(w / 16 * 2, -w / 20, (w / 16) * 14, -w / 20f, paint)
+        canvas.drawLine(w / 16 * 2, -w / 20, w / 16 * 2, -h, paint)
+
+        paint.strokeWidth = w / 500
+        for (i in 2..14) {
+            canvas.drawLine((w / 16) * i, -w / 20f, (w / 16) * i, -h, paint)
+        }
+        val ySize = yAxisValue.size
+        for (i in 1..ySize) {
+            canvas.drawLine(
+                w / 16 * 2,
+                (-h1 / (ySize+1)) * i - w / 20,
+                (w / 16) * 14,
+                (-h1 / (ySize+1)) * i - w / 20,
+                paint
+            )
+        }
+
+    }
+
+    data class Value(val x: Int, val y: Int, val time: String? = null)
 }

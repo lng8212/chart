@@ -463,7 +463,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/activityDayLayout" />
 
-                <com.github.mikephil.charting.charts.LineChart
+                <com.example.chart.ActivityDay
                     android:id="@+id/activityDay"
                     android:layout_width="0dp"
                     android:layout_height="0dp"

@@ -13,16 +13,42 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val activityDay = ActivityDay(activityDay, this)
+
         setUpProgessChart()
         setUpStressChart()
         setUpOxyChart()
         setUpSleepChart()
         setUpActivityWeek()
-        activityDay.setupActivityDay()
+        setUpActivityDay()
+
 
     }
-
+    private fun setUpActivityDay(){
+        val value = mutableListOf(
+            ActivityDay.Value(20, 20),
+            ActivityDay.Value(21, 15),
+            ActivityDay.Value(22, 12 ),
+            ActivityDay.Value(25, 15),
+            ActivityDay.Value(26, 100),
+            ActivityDay.Value(27, 21),
+            ActivityDay.Value(100,95),
+            ActivityDay.Value(144,90)
+        )
+        val xAxisValue = mutableListOf(
+            "00:00",
+            "04:00",
+            "08:00",
+            "12:00",
+            "16:00",
+            "20:00",
+            "23:59"
+        )
+        val yAxisValue = mutableListOf(
+            "50",
+            "100"
+        )
+        activityDay.setValue(value, xAxisValue, yAxisValue)
+    }
     private fun setUpActivityWeek() {
         val xAxisValue = listOf("28/10", "29/10", "30/10", "31/10", "01/11", "02/11", "03/11")
         val yAxisValue = listOf(
@@ -41,20 +67,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpSleepChart() {
-        val timeSleep = 8 * 60
-        val total = listOf(
-            SleepChart.Time(0, 30, "Ngu sau"),
-            SleepChart.Time(30, 35,"Ngu nong"),
-            SleepChart.Time(35, 40, "REM"),
-            SleepChart.Time(40, 50,"Thuc"),
-            SleepChart.Time(50, 70,"Ngu sau"),
-            SleepChart.Time(70, 200,"Ngu nong"),
-            SleepChart.Time(200, 202, "Ngu sau"),
-            SleepChart.Time(202, 300,"Ngu nong"),
-            SleepChart.Time(300, 330, "REM"),
-            SleepChart.Time(330, 480,"Ngu nong")
-        )
-        sleepChart.getValue(SleepChart.Data(timeSleep,total))
+        var total = mutableListOf<SleepChart.Time>()
+        for(i in 0..30){
+            total.add(SleepChart.Time(1) )
+        }
+        sleepChart.setData(SleepChart.Data(100,total))
     }
 
     private fun setUpOxyChart() {

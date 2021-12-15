@@ -2,27 +2,49 @@ package com.example.chart
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 
 class SleepChart(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 
-    val ngu_sau = ContextCompat.getColor(context, R.color.ngu_sau)
-    val ngu_nong = ContextCompat.getColor(context, R.color.ngu_nong)
-    val rem = ContextCompat.getColor(context, R.color.REM)
-    val thuc = ContextCompat.getColor(context, R.color.thuc)
-
-    lateinit var paint: Paint
+    private fun getColor(@ColorRes idColor: Int) = ContextCompat.getColor(context, idColor)
+    private var paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
     var h = 0f
     var w = 0f
-    lateinit var value: Data
+    private var value: Data? = null
+    private var listColor: Map<Int, Int>
 
-    data class Data(val timeSleep: Int,val total:List<Time>)
-    fun getValue (value :Data){
-        this.value = value
+    data class Data(
+        val timeSleep: Long,
+        val total: List<Time>
+    ) {
+        var startTime: Long = 0
+        var endTime: Long = 0
+        var totalSleep: Long = 0
+        var date: Long = 0
     }
+
+    fun setData(value: Data) {
+        this.value = value
+        postInvalidate()
+    }
+
+    init {
+        paint.style = Paint.Style.FILL
+        listColor = mapOf(
+            1 to getColor(R.color.ngu_sau),
+           2 to getColor(R.color.ngu_nong),
+            3 to getColor(R.color.REM),
+            4 to getColor(R.color.thuc),
+        )
+
+    }
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         this.h = h.toFloat()
@@ -31,79 +53,31 @@ class SleepChart(context: Context, attributeSet: AttributeSet) : View(context, a
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        paint = Paint(Paint.ANTI_ALIAS_FLAG)
-        paint.style = Paint.Style.FILL
         canvas!!.translate(0f, h)
-        drawNgusau(canvas)
-        drawNgunong(canvas)
-        drawRem(canvas)
-        drawThuc(canvas)
-
+        drawEntry(canvas)
     }
 
-    private fun drawThuc(canvas: Canvas) {
-        paint.color = thuc
-        for (item in value.total) {
-            if(item.type == "Thuc"){
+
+    private fun drawEntry(canvas: Canvas) {
+        val listValue = value?.total
+        if (listValue != null) {
+            var previousPosition = 0f
+            for (i in listValue.indices) {
+                paint.color = listColor[listValue[i].type] ?: Color.TRANSPARENT
+                val currentPosition = (w / listValue.size) * (i + 1)
+                Log.e("ABC", previousPosition.toString()+ " " + currentPosition.toString() )
                 canvas.drawRect(
-                    w / value.timeSleep * item.start,
+                    previousPosition,
                     -h,
-                    w / value.timeSleep * item.end,
+                    currentPosition,
                     0f,
                     paint
                 )
-            }
-
-        }
-    }
-
-    private fun drawRem(canvas: Canvas) {
-        paint.color = rem
-        for (item in value.total) {
-            if(item.type == "REM"){
-                canvas.drawRect(
-                    w / value.timeSleep* item.start,
-                    -h,
-                    w / value.timeSleep * item.end,
-                    0f,
-                    paint
-                )
-            }
-
-        }
-
-    }
-
-    private fun drawNgunong(canvas: Canvas) {
-        paint.color = ngu_nong
-        for (item in value.total) {
-            if(item.type == "Ngu nong"){
-                canvas.drawRect(
-                    w / value.timeSleep * item.start,
-                    -h,
-                    w / value.timeSleep * item.end,
-                    0f,
-                    paint
-                )
-            }
-
-        }
-    }
-
-    private fun drawNgusau(canvas: Canvas?) {
-        paint.color = ngu_sau
-        for (item in value.total) {
-            if(item.type == "Ngu sau"){
-                canvas!!.drawRect(
-                    w / value.timeSleep * item.start,
-                    -h,
-                    w / value.timeSleep * item.end,
-                    0f,
-                    paint
-                )
+                previousPosition = currentPosition
             }
         }
     }
 
-    data class Time (val start: Int, val end: Int, val type: String)
+    data class Time(val type: Int, val data: Any? = null)
+
 }
